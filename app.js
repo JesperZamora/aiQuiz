@@ -6,8 +6,7 @@ const { main } = require("./ai_module");
 const PORT = 8080;
 
 app.get("/", (req, res) => {
-  return res.sendFile(__dirname + "/public/quiz.html");
-  res.status(200).sendFile(__dirname +"/quiz_page.html");
+  return res.status(200).sendFile(__dirname +"/quiz_page.html");
 });
 
 app.get("/quiz/:subject", async (req, res) => {
