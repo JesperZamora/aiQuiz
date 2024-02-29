@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #f9f8f8e4;
+    }
+
+    .main-container {
+      height: 100vh;
+      padding: 4%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      max-width: 1250px;
+      max-height: 700px;
+    }
+
+    /*------ Middle Container ------*/
+    .middle-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 30px;
+      border: solid 1px rgba(121, 136, 135, 0.03);
+      background-color: rgba(0, 0, 0, 0.025);
+    }
+
+    .middle-container .display {
+      padding: 10px 15px;
+      margin-top: 12px;
+      resize: none;
+      border-radius: 0%;
+      background-color: #ffffffc3;
+      border: solid 1px rgba(121, 136, 135, 0.08);
+      font-size: 14px;
+    }
+
+    .middle-button-group {
+      margin-top: 20px;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .middle-container .answer-button {
+      padding: 5px 40px;
+      cursor: pointer;
+    }
+
+    .middle-container h2 {
+      font-size: 30px;
+    }
+    
+    /*------ Left Container ------*/
+    .left-container {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80%;
+      height: 100%;
+      border: solid 1px rgba(121, 136, 135, 0.03);
+      background-color: rgba(0, 0, 0, 0.025);
+    }
+
+    .left-container h2 {
+      font-size: 30px;
+    }
+
+    .left-container .left-score-board {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    
+    /*------ Right Container ------*/
+    .right-container {
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 80%;
+      height: 100%;
+      border: solid 1px rgba(121, 136, 135, 0.03);
+      background-color: rgba(0, 0, 0, 0.025);
+      overflow: hidden;
+    }
+
+    .right-container .right-button-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 10px 20px;
+      width: 100%;
+    }
+
+    .right-container .right-button-group .category-button {
+      display: block;
+      padding: 5px 20px;
+      width: 100%;
+      margin: 5px;
+      cursor: pointer;
+    }
+
+    .right-container .timer-container {
+      text-align: center;
+    }
+    .right-container #timer {
+      font-size: 30px;
+    }
+
+    .right-container h2 {
+      font-size: 30px;
+    }
+
+    .right-container .right-button-group h2 {
+      margin-bottom: 10px;
+      margin-top: 10px;
+    }
+
+    /*------ Generel Button CSS ------*/
+    .generel-button {
+      background-color: darkslategrey;
+      color: #FFF;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      transition: background-color 0.15s;
+    }
+
+    .generel-button:hover {
+      background-color: #008080;
+    }
+
+    .generel-button:active {
+      background-color: rgba(0, 128, 128, 0.500);
+    }
+
+    .begin-load-color {
+      background-color: #e06e62;
+      color: #fff;
+      transition: background-color 0.15s;
+    }
+
+    .begin-load-color:hover {
+      background-color: #f8867a;
+    }
+
+    .begin-load-color:active {
+      background-color: rgba(250, 128, 114, 0.500);
+    }
+
+    .begin-button-change {
+      background-color: #8fbc8f;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+
+    .begin-button-change:hover {
+      background-color: rgb(172, 216, 172);
+ 
+    }
+
+    .begin-button-change:active {
+      background-color: rgba(143, 188, 143, 0.500);
+    }
+
+    /*------Modal ------*/
+
+    .btn-modal-open {
+      border: none;
+      background-color: #e06e62;
+      color: #fff;
+      padding: 4px 8px;
+      margin-top: 5px;
+      font-weight: bolder;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-modal-open:hover {
+      background-color: #f8867a;
+    }
+
+    .btn-modal-open:active {
+      background-color: rgba(250, 128, 114, 0.500);
+    }
+    
+    .btn-modal-close {
+      padding: 5px 20px;
+      border: none;
+      background-color: #2f4f4f;
+      color: #FFF;
+      align-self: flex-end;
+      font-size: 14px;
+      cursor: pointer;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .btn-modal-close:hover {
+      background-color:  #008080;
+    }
+
+    .btn-modal-close:active {
+      background-color: rgba(0, 128, 128, 0.500);
+    }
+
+    .modal-close-container {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+    }
+
+    .modal {
+      background-color: #fdf9f9;
+      border: solid 1px #7e7c7c;
+      max-width: 600px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .modal p {
+      margin: 10px 20px;
+    }
+    
+    .modal::backdrop {
+      background-color: #000000;
+      opacity: 0.4;
+    }
+
+    .modal-text-container {
+      display: flex;
+      flex-direction: column;
+      padding: 5px 20px;
+    }
+
+    .modal-text-container h2 {
+      font-size: 36px;
+      margin: 5px;
+    }
+    .modal-text-container p {
+      line-height: 25px;
+      text-align: left;
+    }
+
+    .modal-play, .modal-assignment {
+      text-align: left;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 2px;
+      font-size: 18px;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="left-container">
+      <div class="left-score-board">
+        <h2>SCORE BOARD</h2>
+        <p>Work in progess..</p>
+      </div>
+
+    </div>
+    <div class="middle-container">
+      <h1>DATE & YEAR QUIZ! ⏳🤔</h1>
+      <input class="btn-modal-open" id="btn-modal-open" type="button" value="OPEN GUIDE"/>
+      <dialog class="modal" id="modal">
+        <div class="modal-text-container">
+          <h2>Time to deploy!</h2>
+          <p>
+            <span class="modal-play">How to play</span>
+            This is a date and year quiz game. To the right you will find five different categories. Choose a category and press 'Load'. Chat-GPT will now generate 3 questions and when the game is ready the 'Begin' button will become green. You are given 1 minut to answer as many questions possible!
+            The 'Score Board' on the left will come soon.. Have fun! 😁
+            <span class="modal-play">FYI - Generating the quiz can take few seconds ⏳😎</span>
+          </p>
+          
+          <p>
+            <span class="modal-assignment">Assignment</span>
+            "Create an HTML website served with Express focusing on time." <br/>
+            This assignment was given by our lecturer (AL) during the 4th semester of 2024 at KEA Copenhagen. The main objective was to learn about the Express framework and API design. Although deployment using Vercel was not a learning goal, we were encouraged to explore it. Generating the quiz question is done through Chat-GPT-4 API.
+          </p>
+        </div>
+        <div class="modal-close-container">
+          <input class="btn-modal-close" id="btn-modal-close" type="button" value="Close / Esc">
+        </div>
+      </dialog>
+      <textarea class="display" id="display" cols="60" rows="20" disabled>
+      </textarea>
+  
+      <div class="middle-button-group">
+        <input class="answer-button generel-button" id="answer-button" type="button" value="A"/>
+        <input class="answer-button generel-button" id="answer-button" type="button" value="B"/>
+        <input class="answer-button generel-button" id="answer-button" type="button" value="C"/>
+        <input class="answer-button generel-button" id="answer-button" type="button" value="D"/> 
+      </div>
+    </div>
+  
+    <div class="right-container">
+      
+      <div class="timer-container">
+        <h2>TIMER (2min)</h2>
+        <div id="timer">00:00</div>
+      </div>
+
+      <div class="right-button-group">
+        <h2>CATEGORY</h2>
+        <input class="category-button generel-button" id="category-button" type="button" value="Fashion"/>
+        <input class="category-button generel-button" id="category-button" type="button" value="Animals"/>
+        <input class="category-button generel-button" id="category-button" type="button" value="Programming"/>
+        <input class="category-button generel-button" id="category-button" type="button" value="World"/>
+        <input class="category-button generel-button" id="category-button" type="button" value="Games"/>
+        <input class="category-button generel-button begin-load-color " id="load-button" type="button" value="Load Game" disabled/>
+        <input class="category-button generel-button begin-load-color" id="begin-button" type="button" value="Begin" disabled/>
+      </div>
+    </div>
+  </div>
+
+  
+  <script>
+   
+    const display = document.getElementById("display");
+    const beginButton = document.getElementById("begin-button");
+    const loadButton = document.getElementById("load-button");
+    const categoryButton = document.querySelectorAll("#category-button");
+    const answerButton = document.querySelectorAll("#answer-button");
+    const modal = document.getElementById('modal');
+    const btnModalOpen = document.getElementById('btn-modal-open');
+    const btnModalClose = document.getElementById('btn-modal-close');
+  
+
+    let chosenCategory = ""; 
+    let quizArray = [];
+    let questionAmount = 0;
+    let correctAnswers = 0;
+    let count = 0;
+    let interval;
+    let time = 60;
+
+
+    window.addEventListener('load', () => {
+      modal.showModal();
+      display.textContent = "Welcome to the Date & Year Quiz!\n\n1. Choose a category to the right ➡️\n\n2. Press 'Load Game'🕹️\n\n3. Wait for Chat-GPT to generate quiz ⏳\n\n4. Press 'Begin' when the button turns green 🟩"
+    });
+   
+
+    btnModalOpen.addEventListener('click', () => {
+      modal.showModal();
+    });
+
+    btnModalClose.addEventListener('click', () => {
+      modal.close();
+    });
+
+    function beginButtonColor() {
+      beginButton.classList.add("begin-button-change");
+      beginButton.disabled = false;
+    }
+
+    loadButton.addEventListener('click', () => {
+      if(chosenCategory) {
+        fetchData(chosenCategory);
+      }
+      chosenCategory = "";
+    }); 
+
+    beginButton.addEventListener('click', () => {
+      displayQuestionsAndAnswers();
+      startTimer();
+      setTimeout(() => {
+        beginButton.classList.remove("begin-button-change");
+        beginButton.disabled = true;
+        loadButton.disabled = true;
+      }, 1500);
+    });
+    
+    // Adding event listener to all category buttons
+    categoryButton.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        chosenCategory = e.target.value;
+        loadButton.disabled = false;
+      });
+    });
+
+    // Adding event listener to all answer buttons
+    answerButton.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const value = e.target.value;
+        displayExplanationAndNewQuestion(value);
+      });
+    });
+
+    // Fetching quiz data 
+    function fetchData(category) {
+      fetch(`/quiz/${category}`)
+      .then((response) => response.json())
+      .then((result) => {
+        quizArray = result.data;
+        beginButtonColor();
+        questionAmount = quizArray.length;
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        alert("Loading Error... Choose a category and press Load Game again 😎")
+      });
+    }
+
+    // Adding quiz data to display
+    function displayQuestionsAndAnswers() {
+      let questionAndAnswer = "Error: No qestion to be displayed!";
+    
+      if (quizArray && count < questionAmount) {
+        const { question, A, B, C, D } = quizArray[count];
+        questionAndAnswer = `🖥️❓${question} Please choose the correct answer A, B, C or D.\n\nA. ${A}\nB. ${B}\nC. ${C}\nD. ${D}\.\n\n`;
+        display.textContent = questionAndAnswer;
+      } else if(count === questionAmount) {
+        displayCorrectAnswers();
+      } else {
+        display.textContent = questionAndAnswer;
+      }
+    }
+
+   
+    function displayExplanationAndNewQuestion(answer) {
+      let explanationAndNewQuestion = "Error: No answer to display!";
+      const { correctAnswer, correctChoice, explanation } = quizArray[count];
+
+      countCorrectAnswers(correctChoice, answer);
+
+      if(count < questionAmount) {
+        explanationAndNewQuestion = `👨🏽‍💻❓Your answer was: ${answer}\n\n🏆 The correct answer is: ${correctChoice}. ${correctAnswer}\n\n${explanation}`;
+        display.textContent += explanationAndNewQuestion;
+        
+        count++;
+
+        setTimeout(() => {
+          displayQuestionsAndAnswers();
+        }, 6000);
+
+      } else {
+        display.textContent = explanationAndNewQuestion;
+      }
+    } 
+
+    function countCorrectAnswers(correctChoice, userChoice) {
+      if(correctChoice === userChoice) {
+        correctAnswers++;
+      }
+    }
+
+    function displayCorrectAnswers() {
+      display.textContent = `You got ${correctAnswers} out of ${questionAmount} questions correct. Thank you for playing!👏🏽\n\nChoose a another category and try again 😁`;
+      resetGameVariables();
+    }
+
+    function resetGameVariables() {
+      quizArray = [];
+      questionAmount = 0;
+      correctAnswers = 0;
+      count = 0;
+      clearInterval(interval);
+      time = 60;
+    }
+    
+    function startTimer() {
+      let timer = document.getElementById('timer');
+      timer.textContent = formatTime(time);
+
+      interval = setInterval(() => {
+        time -= 1;
+        timer.textContent = formatTime(time);
+
+        if (time <= 0) {
+          clearInterval(interval);
+          timer.textContent = "Time's up!";
+          displayCorrectAnswers();
+        }
+      }, 1000);
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainderSeconds = seconds % 60;
+      return `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+    }
+  </script>
+</body>
+</html>
